@@ -19,16 +19,12 @@ public class Main {
             String[] columns = countryLine.split("\\|");
             Country country = new Country(columns[0], columns[1]);
             String firstLetter = String.valueOf(country.name.charAt(0));
-            countryMap.put(firstLetter, countryArray);
-            countryArray.add(country);
-
             if (!countryMap.containsKey(firstLetter)) {
                 countryMap.put(firstLetter, new ArrayList<>());
             }
-            System.out.println(countryMap.toString());
+            countryMap.get(firstLetter).add(country);
         }
-        //System.out.println(countryArray);
-
+        System.out.println(countryMap.toString());
     }
 }
 
