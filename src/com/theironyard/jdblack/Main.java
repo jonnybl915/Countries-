@@ -8,8 +8,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
-        ArrayList<Country> countryArray = new ArrayList<>();
+    public static void main(String[] args) throws Exception {
 
         HashMap<String, ArrayList<Country>> countryMap = new HashMap<>();
         File f = new File("countries.txt");
@@ -24,7 +23,18 @@ public class Main {
             }
             countryMap.get(firstLetter).add(country);
         }
-        System.out.println(countryMap.toString());
+
+        System.out.println("Please type a letter.");
+        Scanner scanner = new Scanner(System.in);
+        String letterChoice = scanner.nextLine();
+        if (letterChoice.length()!=1) {
+            throw new Exception("Please enter one SINGLE letter!");
+        }
+
+        ArrayList<Country> countryArrayList = countryMap.get(letterChoice);
+        System.out.println(countryArrayList);
+
+
     }
 }
 
