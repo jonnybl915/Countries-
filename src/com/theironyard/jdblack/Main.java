@@ -31,13 +31,12 @@ public class Main {
         if (letterChoice.length()!=1) {
             throw new Exception("Please enter one SINGLE letter!");
         }
-
         ArrayList<Country> countryArrayList = countryMap.get(letterChoice);
         System.out.println(countryArrayList);
-        File (f) = new File("countries.txt");
-        FileWriter fw = new FileWriter(f);
-        fw.write(f); //this will overwrite the file if it exists
-        fw.close(); //always remember to close the file
+        File countryFile = new File (String.format("%s_Countries.txt", letterChoice));
+        FileWriter fw = new FileWriter(countryFile);
+        fw.write(countryArrayList.toString());
+        fw.close();
     }
 }
 
