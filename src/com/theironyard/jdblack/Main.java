@@ -2,6 +2,7 @@ package com.theironyard.jdblack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -33,8 +34,10 @@ public class Main {
 
         ArrayList<Country> countryArrayList = countryMap.get(letterChoice);
         System.out.println(countryArrayList);
-
-
+        File (f) = new File("countries.txt");
+        FileWriter fw = new FileWriter(f);
+        fw.write(f); //this will overwrite the file if it exists
+        fw.close(); //always remember to close the file
     }
 }
 
