@@ -1,7 +1,6 @@
 package com.theironyard.jdblack;
-
+import jodd.json.JsonSerializer;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,15 +33,23 @@ public class Main {
         }
         ArrayList countryArrayList = countryMap.get(letterChoice);
         System.out.println(countryArrayList);
-
-
+        writeFile(letterChoice, countryArrayList.toString());
+        writeFileJson(countryArrayList, letterChoice);
+        System.out.println(countryMap);
     }
-
-    public void writeFile(String letterChoice, String countryData) throws IOException {
+    public static void writeFile(String letterChoice, String countryData) throws IOException {
 
         File countryFile = new File (String.format("%s_Countries.txt", letterChoice));
         FileWriter fw = new FileWriter(countryFile);
         fw.write(countryData);
+        fw.close();
+    }
+    public static void writeFileJson(ArrayList countryArrayList, String letterChoice) throws IOException {
+        File f = new File(String.format("%scountry.json", letterChoice));
+        JsonSerializer serializer = new JsonSerializer();
+        String json = serializer.serialize(countryArrayList);
+        FileWriter fw = new FileWriter(f);
+        fw.write(json);
         fw.close();
     }
 }
