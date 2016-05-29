@@ -35,9 +35,14 @@ public class Main {
         ArrayList countryArrayList = countryMap.get(letterChoice);
         System.out.println(countryArrayList);
 
+
+    }
+
+    public void writeFile(String letterChoice, String countryData) throws IOException {
+
         File countryFile = new File (String.format("%s_Countries.txt", letterChoice));
         FileWriter fw = new FileWriter(countryFile);
-        fw.write(countryArrayList.toString());
+        fw.write(countryData);
         fw.close();
     }
 }
