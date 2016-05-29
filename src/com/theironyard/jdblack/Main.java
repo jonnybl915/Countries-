@@ -1,6 +1,7 @@
 package com.theironyard.jdblack;
 import jodd.json.JsonSerializer;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,8 +12,23 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        System.out.println("Please type a letter.");
+        Scanner scanner = new Scanner(System.in);
+        String letterChoice = scanner.nextLine();
+        if (letterChoice.length()!=1) {
+            throw new Exception("Please enter one SINGLE letter!");
+        }
+        HashMap<String, ArrayList<Country>> countryMap = readCountriesFromFile("countries.txt");
+        ArrayList countryArrayList = countryMap.get(letterChoice);
+        System.out.println(countryArrayList);
+        writeFile(letterChoice, countryArrayList.toString());
+        writeFileJson(countryArrayList, letterChoice);
+        System.out.println(countryMap);
+    }
+
+    public static HashMap<String, ArrayList<Country>> readCountriesFromFile(String fileName) throws FileNotFoundException {
         HashMap<String, ArrayList<Country>> countryMap = new HashMap<>();
-        File f = new File("countries.txt");
+        File f = new File(fileName);
         Scanner fileScanner = new Scanner(f);
         while (fileScanner.hasNext()) {
             String countryLine = fileScanner.nextLine();
@@ -25,18 +41,10 @@ public class Main {
             countryMap.get(firstLetter).add(country);
 
         }
-        System.out.println("Please type a letter.");
-        Scanner scanner = new Scanner(System.in);
-        String letterChoice = scanner.nextLine();
-        if (letterChoice.length()!=1) {
-            throw new Exception("Please enter one SINGLE letter!");
-        }
-        ArrayList countryArrayList = countryMap.get(letterChoice);
-        System.out.println(countryArrayList);
-        writeFile(letterChoice, countryArrayList.toString());
-        writeFileJson(countryArrayList, letterChoice);
-        System.out.println(countryMap);
+        return countryMap;
     }
+
+
     public static void writeFile(String letterChoice, String countryData) throws IOException {
 
         File countryFile = new File (String.format("%s_Countries.txt", letterChoice));
@@ -45,7 +53,7 @@ public class Main {
         fw.close();
     }
     public static void writeFileJson(ArrayList countryArrayList, String letterChoice) throws IOException {
-        File f = new File(String.format("%scountry.json", letterChoice));
+        File f = new File(String.format("%s_country.json", letterChoice));
         JsonSerializer serializer = new JsonSerializer();
         String json = serializer.serialize(countryArrayList);
         FileWriter fw = new FileWriter(f);
