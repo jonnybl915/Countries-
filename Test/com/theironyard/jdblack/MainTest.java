@@ -16,11 +16,13 @@ public class MainTest {
     public void readCountriesFromFile() throws Exception {
         HashMap<String, ArrayList<Country>> testCountryData = Main.readCountriesFromFile("countries.txt");
         assertEquals(15, testCountryData.get("a").size());
+        assertEquals(4, testCountryData.get("d").size());
 
     }
 
     @Test
     public void writeFile() throws Exception {
+
 
     }
 
